@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import api from "../../apis/axios";
+import Container from "@mui/material/Container";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 
 const Login = ({ setAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -22,7 +28,7 @@ const Login = ({ setAuth }) => {
           response.data.result[0].fk_company_id
         );
         setAuth(true);
-        navigate("/");
+        window.location.href = "/dashboard";
       } else {
         console.log("Unable to login!");
       }
@@ -32,27 +38,51 @@ const Login = ({ setAuth }) => {
   };
 
   return (
-    <div>
-      <label htmlFor="loginemail">Email:</label>
-      <input
-        id="loginemail"
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <br />
-      <label htmlFor="loginpassword">Password:</label>
-      <input
-        id="loginpassword"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <br />
-      <button type="button" onClick={handleLogin}>
-        Login
-      </button>
-    </div>
+    <Container
+      maxWidth="xs"
+      style={{
+        marginTop: "5vh",
+      }}
+    >
+      <Card>
+        <CardContent>
+          <Stack direction="column" spacing={2}>
+            <Typography
+              mb={1}
+              variant="h3"
+              color="primary.text"
+              textAlign="center"
+            >
+              Log In
+            </Typography>
+            <TextField
+              type="email"
+              label="Email"
+              fullWidth
+              variant="filled"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              fullWidth
+              variant="filled"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+
+            <Button variant="contained" color="primary" onClick={handleLogin}>
+              Log In
+            </Button>
+            <Typography variant="body1" textAlign="center">
+              Don't have an account? <Link to="/register">Register</Link> to
+              continue.
+            </Typography>
+          </Stack>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
 

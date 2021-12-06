@@ -1,0 +1,11 @@
+.customModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600;
+  min-width: 400;
+  border: 2px solid #000;
+  box-shadow: 24;
+  padding: 2rem;
+}

@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
 
 import api from "../apis/axios";
-import Layout from "./layout/Layout";
-import Register from "./auth/Register";
+import "../styles/CustomStyles.css";
+import { lightTheme, darkTheme } from "./theme";
+import MainNav from "./layout/MainNav";
+import Landing from "./landing";
 import Login from "./auth/Login";
-import ViewProject from "./main/projects/ViewProject";
-import CreateProject from "./main/projects/CreateProject";
-import Account from "./main/account/Account";
-import PageNotFound from "./utils/PageNotFound";
+import Register from "./auth/Register";
+import DashBoard from "./dashboard";
+import ViewProject from "./dashboard/project/ViewProject";
+import Account from "./account";
+import PageNotFound from "./layout/templates/PageNotFound";
 
 const App = () => {
   const [auth, setAuth] = useState(false);
+  const [dark, setDark] = useState(false);
+  // store theme preference
+  const toggleTheme = () => {
+    localStorage.setItem("theme", !dark ? "dark" : "light");
+    setDark((dark) => !dark);
+  };
 
-  // check authentication
   useEffect(() => {
+    // check authentication
     const checkAuthenticated = async () => {
+      const storedId = localStorage.getItem("userId");
       try {
         const response = await api.get("/checkauth");
-        console.log(response.data);
-        if (response.data.auth) {
+        if (response.data.auth && storedId) {
           setAuth(true);
         }
       } catch (error) {
@@ -30,28 +40,51 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout auth={auth} setAuth={setAuth} />}>
-          {auth ? (
-            <>
-              <Route path="/" index element={<ViewProject />} />
-              <Route path="/create" element={<CreateProject />} />
-              <Route path="/account" element={<Account />} />
-            </>
-          ) : (
-            <>
-              <Route path="/" index element={<Login setAuth={setAuth} />} />
-              <Route
-                path="/register"
-                element={<Register setAuth={setAuth} />}
+    <ThemeProvider theme={dark ? darkTheme : lightTheme}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <MainNav
+                auth={auth}
+                setAuth={setAuth}
+                toggleTheme={toggleTheme}
               />
-            </>
-          )}
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+            }
+          >
+            <Route path="/" exact element={<Landing />} />
+            {!auth ? (
+              <React.Fragment>
+                <Route
+                  path="/login"
+                  exact
+                  element={<Login setAuth={setAuth} />}
+                />
+                <Route
+                  path="/register"
+                  exact
+                  element={<Register setAuth={setAuth} />}
+                />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Route
+                  path="/dashboard"
+                  exact
+                  element={<DashBoard auth={auth} />}
+                />
+                <Route path="/projects" exact element={<ViewProject />} />
+                <Route path="/account" exact element={<Account />} />
+
+                <Route path="*" exact element={<PageNotFound />} />
+              </React.Fragment>
+            )}
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

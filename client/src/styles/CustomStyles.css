@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ALL LINKS */
+.customLink:link {
+  text-decoration: none;
+}
+
+/* MAIN HEADERS */
+.headerBoxContainer {
+  padding-top: 8px !important;
+  padding-bottom: 0 !important;
+}
+
+.headerBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+.headerBoxDivider {
+  margin-bottom: 8px !important;
+}
+
+/* NAV APP */
+.navAppListItem {
+  border-radius: 999px !important;
+  padding: 12px !important;
+  height: 30px !important;
+}
+
+/* EMPLOYEE NAMES */
+.pointerOnHover:hover {
+  cursor: pointer;
+}
+
+/* PROJECT & TICKET FIELD LABELS */
+.overlineText {
+  line-height: 1 !important;
+  font-weight: bolder !important;
+}
+
+/* SELECT TICKET */
+.selectTicketButton {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+/* COMMENT BOX */
+.commentsBoxDark {
+  background: #333 !important;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0.5ch 0 !important;
+  padding-left: 1ch !important;
+}
+
+.commentsBoxLight {
+  background: #eee !important;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0.5ch 0 !important;
+  padding-left: 1ch !important;
+}
+
+/* MAIN NAV */
+.navDark {
+  background-color: #212121;
+}
+
+.navLight {
+  background-color: #fff;
+}
+
+.navLink {
+  width: fit-content;
+  border-radius: 99px;
+  padding: 0 !important;
+  margin: 0 0.2rem;
+}
+
+.navLinkAccount {
+  margin-left: auto;
+}
+
+.navButton {
+  border-radius: 99px !important;
+  padding: 0.3rem 0.8rem !important;
+  width: fit-content !important;
+}
